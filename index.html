@@ -252,28 +252,28 @@
         <div v-else-if="page=='ball_toss'">
             <button @click="page='home'" class="d-block mt-3" style="text-decoration:none;width:70px;background-color:rgb(196, 49, 49);border-radius:0px 80px 80px 0px;font-size:13px;color:white;border:none;height:25px;font-weight:bold">ホームへ</button>
             <div class="d-flex mt-3">
-            <img src="imgs/teamdance.svg" style="width:120px">
-            <p class="scoreFontRed" style="font-size:30px;margin-top:30px;margin-left:20px">OBSTACLE BALL TOSS</p>
+            <img src="imgs/teamdance.svg" style="width:90px">
+            <p class="scoreFontRed" style="font-size:20px;margin-top:30px;margin-left:20px">OBSTACLE BALL TOSS</p>
             </div>
             <div style="height:2px;background-color:rgb(196, 49, 49);width:100%" class="mt-2"></div>
             <template v-for="j in 3">
                 <div class="card" style="padding:15px;margin-top:20px;border:1px solid rgb(196, 49, 49)">
-                    <p style="border-radius:80px;padding:10px;font-weight:bold;border:1px solid rgb(196, 49, 49);font-size:15px;width:150px;color:rgb(196, 49, 49);text-align: center;">
+                    <p style="border-radius:80px;padding:5px;font-weight:bold;border:1px solid rgb(196, 49, 49);font-size:12px;width:120px;color:rgb(196, 49, 49);text-align: center;">
                         {{game_order['ball_toss'][j-1]}}</p>
                     <template v-for="(i,index) in result['ball_toss'][j-1]">
-                        <div class="card mb-2 pt-2 ps-3" v-bind:class="{card:true,'mb-2':true,whiteRankBar:team[3].includes(i[0][2]) || team[1].includes(i[0]),redRankBar:team[2].includes(i[0][2]) || team[0].includes(i[0])}" 
-                        style="height:73px">
+                        <div class="card mb-2 pt-1 ps-3" v-bind:class="{card:true,'mb-2':true,whiteRankBar:team[3].includes(i[0][2]) || team[1].includes(i[0]),redRankBar:team[2].includes(i[0][2]) || team[0].includes(i[0])}" 
+                        style="height:53px">
                         <div class="d-flex">
                             <!--<p style="margin-top:12px">{{index+1}}</p>-->
-                            <div class="ms-1" style="font-size:15px">
+                            <div class="ms-1" style="font-size:11px;margin-top:2px" >
                             <p class=" ">{{i[0]}}</p>
                             <p class="" style="margin-top:-20px">&</p>
                             <p class="" style="margin-top:-20px">{{i[1]}}</p>
                             </div>
-                            <p class="ms-4" style="font-size:25px;margin-top:10px">{{i[5]}}球</p>
-                            <div class="ms-3" style="margin-top:7px">
-                                <p style="font-size:13px">獲得球 : {{i[3]}}</p>
-                                <p style="font-size:13px;margin-top:-10px">お邪魔した球 : {{i[4]}}</p>
+                            <p class="ms-4" style="font-size:15px;margin-top:10px">{{i[5]}}球</p>
+                            <div class="ms-4" style="margin-top:3px">
+                                <p style="font-size:11px">獲得球 : {{i[3]}}</p>
+                                <p style="font-size:11px;margin-top:-10px">お邪魔した球 : {{i[4]}}</p>
                             </div>
                             <!--<p style="margin-top:12px" class="ms-auto me-3">{{score_config.all_relay_score[index]}}p</p>-->
                             </div>
@@ -286,20 +286,19 @@
         <div v-else-if="page=='vertical_relay'">
             <button @click="page='home'" class="d-block mt-3" style="text-decoration:none;width:70px;background-color:rgb(196, 49, 49);border-radius:0px 80px 80px 0px;font-size:13px;color:white;border:none;height:25px;font-weight:bold">ホームへ</button>
             <div class="d-flex mt-3">
-            <img src="imgs/teamdance.svg" style="width:120px">
-            <p class="scoreFontRed" style="font-size:30px;margin-top:30px;margin-left:20px">VERTICAL RELAY</p>
+            <img src="imgs/teamdance.svg" style="width:90px">
+            <p class="scoreFontRed" style="font-size:20px;margin-top:30px;margin-left:20px">VERTICAL RELAY</p>
             </div>
             <div style="height:2px;background-color:rgb(196, 49, 49);width:100%" class="mt-2"></div>
             <template v-for="j in 1">
                 <div class="card" style="padding:15px;margin-top:20px;border:1px solid rgb(196, 49, 49)">
-                    <p style="border-radius:80px;padding:10px;font-weight:bold;border:1px solid rgb(196, 49, 49);font-size:15px;width:120px;color:rgb(196, 49, 49);text-align: center;">第{{j}}試合</p>
                     <template v-for="(i,index) in result['vertical_relay']">
-                        <div class="card mb-2 pt-2 ps-3" v-bind:class="{card:true,'mb-2':true,whiteRankBar:team[3].includes(i[0]) || team[1].includes(i[0]),redRankBar:team[2].includes(i[0]) || team[0].includes(i[0])}" 
-                        style="height:73px">
+                        <div class="card mb-2 ps-3" v-bind:class="{card:true,'mb-2':true,whiteRankBar:team[3].includes(i[0]) || team[1].includes(i[0]),redRankBar:team[2].includes(i[0]) || team[0].includes(i[0])}" 
+                        style="height:35px">
                         <div class="d-flex">
-                            <p style="margin-top:12px">{{index+1}}</p>
-                            <p class="ms-3" style="margin-top:13px">{{i[0]}} & {{i[1]}} & {{i[2]}}</p>
-                            <p style="margin-top:12px" class="ms-auto me-3">{{score_config.vertical_relay[index]}}p</p>
+                            <p style="margin-top:6px">{{index+1}}</p>
+                            <p class="ms-3" style="margin-top:6px">{{i[0]}} & {{i[1]}} & {{i[2]}}</p>
+                            <p style="margin-top:6px" class="ms-auto me-3">{{score_config.vertical_relay[index]}}p</p>
                             </div>
                         </div>
                     </template>
