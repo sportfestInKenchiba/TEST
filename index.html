@@ -218,30 +218,30 @@
         </div>
 
         <div v-else-if="page=='long_jump'">
-            <button @click="page='home'" class="d-block mt-3" style="text-decoration:none;width:80px;background-color:rgb(196, 49, 49);border-radius:0px 80px 80px 0px;font-size:15px;color:white;border:none;height:30px;font-weight:bold">ホームへ</button>
+            <button @click="page='home'" class="d-block mt-3" style="text-decoration:none;width:70px;background-color:rgb(196, 49, 49);border-radius:0px 80px 80px 0px;font-size:13px;color:white;border:none;height:25px;font-weight:bold">ホームへ</button>
             <div class="d-flex mt-3">
-            <img src="imgs/teamdance.svg" style="width:120px">
-            <p class="scoreFontRed" style="font-size:30px;margin-top:30px;margin-left:20px">LONG ROPE JUMP</p>
+            <img src="imgs/teamdance.svg" style="width:90px">
+            <p class="scoreFontRed" style="font-size:20px;margin-top:30px;margin-left:20px">LONG ROPE JUMP</p>
             </div>
             <div style="height:2px;background-color:rgb(196, 49, 49);width:100%" class="mt-2"></div>
             <template v-for="j in 3">
-                <div class="card" style="padding:15px;margin-top:20px;border:1px solid rgb(196, 49, 49)">
-                    <p style="border-radius:80px;padding:10px;font-weight:bold;border:1px solid rgb(196, 49, 49);font-size:15px;width:120px;color:rgb(196, 49, 49);text-align: center;">
+                <div class="card" style="padding:10px;margin-top:20px;border:1px solid rgb(196, 49, 49)">
+                    <p style="border-radius:80px;padding:5px;font-weight:bold;border:1px solid rgb(196, 49, 49);font-size:12px;width:90px;color:rgb(196, 49, 49);text-align: center;">
                         {{game_order['long_jump'][j-1]}}</p>
                     <template v-for="(i,index) in result['long_jump'][j-1]">
-                        <div class="card mb-2 pt-2 ps-3" v-bind:class="{card:true,'mb-2':true,whiteRankBar:team[3].includes(i[0][2]) || team[1].includes(i[0]),redRankBar:team[2].includes(i[0][2]) || team[0].includes(i[0])}" 
-                        style="height:73px">
+                        <div class="card mb-2 ps-3" v-bind:class="{card:true,'mb-2':true,whiteRankBar:team[3].includes(i[0][2]) || team[1].includes(i[0]),redRankBar:team[2].includes(i[0][2]) || team[0].includes(i[0])}" 
+                        style="height:53px">
                         <div class="d-flex">
-                            <p style="margin-top:12px">{{index+1}}</p>
-                            <div class="ms-1">
+                            <p style="margin-top:15px">{{index+1}}</p>
+                            <div class="ms-1 mt-2">
                             <p class="ms-4 ">{{i[0]}}</p>
                             <p class="ms-3" style="margin-top:-20px">{{i[3]}}回</p>
                             </div>
                             <div class="ms-4" style="margin-top:7px">
-                                <p style="font-size:13px">大繩 : {{i[1]}}</p>
-                                <p style="font-size:13px;margin-top:-10px">8の字 : {{i[2]}}</p>
+                                <p style="font-size:11px">大繩 : {{i[1]}}</p>
+                                <p style="font-size:11px;margin-top:-10px">8の字 : {{i[2]}}</p>
                             </div>
-                            <p style="margin-top:12px" class="ms-auto me-3">{{score_config.all_relay_score[index]}}p</p>
+                            <p style="margin-top:15px" class="ms-auto me-3">{{score_config.all_relay_score[index]}}p</p>
                             </div>
                         </div>
                     </template>
@@ -250,7 +250,7 @@
         </div>
 
         <div v-else-if="page=='ball_toss'">
-            <button @click="page='home'" class="d-block mt-3" style="text-decoration:none;width:80px;background-color:rgb(196, 49, 49);border-radius:0px 80px 80px 0px;font-size:15px;color:white;border:none;height:30px;font-weight:bold">ホームへ</button>
+            <button @click="page='home'" class="d-block mt-3" style="text-decoration:none;width:70px;background-color:rgb(196, 49, 49);border-radius:0px 80px 80px 0px;font-size:13px;color:white;border:none;height:25px;font-weight:bold">ホームへ</button>
             <div class="d-flex mt-3">
             <img src="imgs/teamdance.svg" style="width:120px">
             <p class="scoreFontRed" style="font-size:30px;margin-top:30px;margin-left:20px">OBSTACLE BALL TOSS</p>
@@ -284,7 +284,7 @@
         </div>
 
         <div v-else-if="page=='vertical_relay'">
-            <button @click="page='home'" class="d-block mt-3" style="text-decoration:none;width:80px;background-color:rgb(196, 49, 49);border-radius:0px 80px 80px 0px;font-size:15px;color:white;border:none;height:30px;font-weight:bold">ホームへ</button>
+            <button @click="page='home'" class="d-block mt-3" style="text-decoration:none;width:70px;background-color:rgb(196, 49, 49);border-radius:0px 80px 80px 0px;font-size:13px;color:white;border:none;height:25px;font-weight:bold">ホームへ</button>
             <div class="d-flex mt-3">
             <img src="imgs/teamdance.svg" style="width:120px">
             <p class="scoreFontRed" style="font-size:30px;margin-top:30px;margin-left:20px">VERTICAL RELAY</p>
@@ -308,7 +308,7 @@
         </div>
 
         <div v-else-if="page=='view_all'">
-            <button @click="page='home'" class="d-block mt-3" style="text-decoration:none;width:80px;background-color:rgb(196, 49, 49);border-radius:0px 80px 80px 0px;font-size:15px;color:white;border:none;height:30px;font-weight:bold">ホームへ</button>
+            <button @click="page='home'" class="d-block mt-3" style="text-decoration:none;width:70px;background-color:rgb(196, 49, 49);border-radius:0px 80px 80px 0px;font-size:13px;color:white;border:none;height:25px;font-weight:bold">ホームへ</button>
             <template v-for="(i,index) in game_list">
                 <template v-if="result['game_score'][i][0]+result['game_score'][i][1]!=0">
                 <p class="text-center fw-bold mt-2 mx-auto p-1" style="border-radius:50px;width:75px;border:1px solid rgb(196, 49, 49);color:rgb(196, 49, 49);font-size:12px">第{{index+1}}競技</p>
