@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9ndCyUaIbzAi2FUVXJi0CjmCapSmO7SnpJef0486qhLnuZ2cdeRhO02iuK6FUUVM" crossorigin="anonymous">
+    <title>ホームページ</title>
+    <link rel="stylesheet" href="https://indestructibletype.com/fonts/Jost.css" type="text/css" charset="utf-8" />
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.14/dist/vue.js"></script>
+</head>
+<style>
+/* 全体のスタイル調整 */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: #1a1d24; /* ダークな背景色 */
+    color: #f0f0f0;
+    font-family: 'Jost', sans-serif;
+}
+
+#app {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+}
+
+/* ヘッダー */
+.main-header {
+    background-color: #000;
+    padding: 10px 20px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    display: flex;
+    gap: 25px;
+    align-items: center;
+}
+.main-header p, .main-header a {
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    text-decoration: none;
+    cursor: pointer;
+    transition: color 0.3s ease;
+}
+.main-header p:hover, .main-header a:hover {
+    color: rgb(220, 53, 69);
+}
+
+/* メインビジュアル */
+.main-visual {
+    text-align: center;
+    padding: 20px;
+    background: linear-gradient(rgba(26, 29, 36, 0.8), rgba(26, 29, 36, 1)), url('imgs/pre.png') center/cover no-repeat;
+    border-bottom: 2px solid rgb(196, 49, 49);
+}
+.main-visual img {
+    max-width: 60%;
+    height: auto;
+}
+
+/* コンテンツエリア */
+.content-wrapper {
+    flex-grow: 1;
+    padding: 20px;
+}
+
+.test-notice {
+    text-align: center;
+    color: #aaa;
+    margin-bottom: 20px;
+    font-style: italic;
+}
+
+/* ホーム画面のスコア表示 */
+.section-title {
+    width: 180px;
+    margin-bottom: 15px;
+}
+.score-divider {
+    height: 3px;
+    background: linear-gradient(90deg, rgb(196, 49, 49), #c43131, #a12a2a);
+    width: 100%;
+    margin-top: -10px;
+    border-radius: 5px;
+}
+
+/* 総合得点 */
+.total-score-display {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+}
+.score-font-white {
+    font-weight: bold;
+    color: #f0f0f0;
+    font-family: 'Jost';
+    font-size: 48px;
+    text-shadow: 0 0 10px rgba(196, 49, 49, 0.7);
+}
+.score-font-red {
+    font-weight: bold;
+    color: rgb(196, 49, 49);
+    font-family: 'Jost';
+    font-size: 48px;
+    text-shadow: 0 0 10px rgba(196, 49, 49, 0.5);
+}
+
+/* スコアバー */
+.score-bar-container {
+    display: flex;
+    width: 100%;
+    height: 30px;
+    border-radius: 15px;
+    overflow: hidden;
+    background-color: #333;
+    box-shadow: inset 0 2px 5px rgba(0,0,0,0.5);
+}
+#scoreBarWhite, #scoreBarRed {
+    height: 100%;
+    transition: width 0.5s ease-in-out;
+}
+#scoreBarWhite {
+    background: linear-gradient(90deg, #eee, #fff);
+    border-radius: 15px 0 0 15px;
+}
+#scoreBarRed {
+    background: linear-gradient(90deg, #c43131, rgb(196, 49, 49));
+    border-radius: 0 15px 15px 0;
+}
+
+/* 競技結果リスト */
+.results-scroll-container {
+    max-height: 300px;
+    overflow-y: auto;
+    padding: 10px;
+    margin-top: 20px;
+    border-radius: 10px;
+}
+.game-result-card {
+    background-color: #2a2d34;
+    border-radius: 15px;
+    padding: 15px;
+    margin-bottom: 20px;
+    text-align: center;
+    border: 1px solid #444;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+.game-result-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(0,0,0,0.4);
+}
+.game-title {
+    font-weight: bold;
+    color: white;
+    background-color: rgb(196, 49, 49);
+    border-radius: 50px;
+    padding: 5px 15px;
+    display: inline-block;
+    margin-bottom: 15px;
+}
+.game-scores {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}
+.game-scores .score-font-white, .game-scores .score-font-red {
+    font-size: 32px;
+}
+.game-icon {
+    width: 80px;
+    cursor: pointer;
+    transition: transform 0.3s;
+}
+.game-icon:hover {
+    transform: scale(1.1);
+}
+.game-name {
+    font-size: 15px;
+    color: #ccc;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+/* ボタン */
+.btn-main {
+    text-decoration: none;
+    width: 60%;
+    border: 2px solid rgb(196, 49, 49);
+    border-radius: 30px;
+    font-family: 'jost', sans-serif;
+    font-size: 18px;
+    background-color: transparent;
+    color: rgb(196, 49, 49);
+    padding: 10px;
+    display: block;
+    margin: 20px auto;
+    text-align: center;
+    transition: background-color 0.3s, color 0.3s;
+}
+.btn-main:hover {
+    background-color: rgb(196, 49, 49);
+    color: white;
+}
+.btn-back {
+    text-decoration:none;
+    width: 110px;
+    background-color: rgb(196, 49, 49);
+    border-radius: 80px;
+    font-size: 15px;
+    color: white;
+    border: none;
+    height: 35px;
+    font-weight: bold;
+    display: block;
+    margin: 20px auto;
+    transition: background-color 0.3s, transform 0.3s;
+}
+.btn-back:hover {
+    background-color: #e04444;
+    transform: scale(1.05);
+}
+
+
+/* NEXT GAME カード */
+.next-game-card {
+    background: linear-gradient(45deg, #c43131, #a12a2a);
+    color: white;
+    border-radius: 10px;
+    margin-top: 20px;
+    padding: 15px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+}
+.next-game-card .title {
+    font-size: 24px;
+    font-family: 'jost';
+    font-weight: bold;
+}
+.next-game-card .divider {
+    height: 2px;
+    background-color: white;
+    width: 100%;
+    margin: 5px 0 15px 0;
+}
+.next-game-card .content {
+    display: flex;
+    align-items: center;
+}
+.next-game-card .icon {
+    width: 60px;
+}
+.next-game-card .game-name {
+    font-size: 22px;
+    font-family: 'jost';
+    font-weight: bold;
+    margin-left: 20px;
+}
+
+
+/* 詳細ページ */
+.detail-page-header {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin-top: 15px;
+}
+.detail-page-header img {
+    width: 90px;
+}
+.detail-page-header p {
+    font-size: 24px;
+    margin: 0;
+}
+
+/* ランキング表示 */
+.race-card {
+    padding: 15px;
+    margin-top: 20px;
+    border: 1px solid #444;
+    border-radius: 10px;
+    background-color: #2a2d34;
+}
+.race-title {
+    border-radius: 80px;
+    padding: 5px;
+    font-weight: bold;
+    border: 1px solid rgb(196, 49, 49);
+    font-size: 12px;
+    width: auto;
+    display: inline-block;
+    padding-left: 15px;
+    padding-right: 15px;
+    color: rgb(196, 49, 49);
+    text-align: center;
+    margin-bottom: 15px;
+}
+
+.rank-item {
+    border-radius: 8px;
+    margin-bottom: 8px;
+    height: 40px;
+    padding: 8px 15px;
+    font-weight: bold;
+    font-family: 'jost', sans-serif;
+    display: flex;
+    align-items: center;
+    transition: background-color 0.3s;
+}
+.whiteRankBar {
+    border: 1px solid rgb(196, 49, 49);
+    color: rgb(196, 49, 49);
+    background-color: #f0f0f0;
+}
+.redRankBar {
+    background-color: rgb(196, 49, 49);
+    color: white;
+}
+.rank-item p {
+    margin: 0;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+.rank-item .team-name {
+    margin-left: 2rem;
+}
+
+/* フッター */
+.main-footer {
+    background-color: #000;
+    color: white;
+    padding: 20px;
+    text-align: center;
+    margin-top: auto;
+}
+.main-footer .container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.main-footer span {
+    font-size: 13px;
+    color: #888;
+}
+
+</style>
+<body>
+    <div id="app">
+
+        <header class="main-header">
+            <p @click="page='home'">ホーム</p>
+            <p @click="page='view_all'">得点一覧</p>
+            <a href="https://sites.google.com/kenchiba.net/sportsfest">公式サイト</a>
+        </header>
+
+        <div class="main-visual">
+            <img src="imgs/25秋_横-removebg-preview.png">
+        </div>
+
+        <main class="content-wrapper">
+            <p class="test-notice">※テスト用なので得点や順位は適当です</p>
+
+            <div v-if="page=='home'">
+                <img src="imgs/score.png" class="section-title">
+                <div class="score-divider"></div>
+
+                <div class="total-score-display">
+                    <span class="score-font-white">{{result.total[1]}}</span>
+                    <span class="score-font-red">{{result.total[0]}}</span>
+                </div>
+
+                <div class="score-bar-container">
+                    <div id="scoreBarWhite" :style="{width:result.total[1]/(result.total[0]+result.total[1])*100+'%'}"></div>
+                    <div id="scoreBarRed" :style="{width:result.total[0]/(result.total[0]+result.total[1])*100+'%'}"></div>
+                </div>
+
+                <div class="results-scroll-container">
+                    <template v-for="(i,index) in game_list.slice().reverse()">
+                        <div v-if="result['game_score'][i][0]+result['game_score'][i][1]!=0" class="game-result-card">
+                            <p class="game-title">第{{game_list.length-index}}競技</p>
+                            <div class="game-scores">
+                                <span class="score-font-white">{{result.game_score[i][1]}}</span>
+                                <div @click="page=i">
+                                    <img src="imgs/teamdance.svg" class="game-icon">
+                                    <p class="game-name">{{game_list_jp.slice().reverse()[index]}}</p>
+                                </div>
+                                <span class="score-font-red">{{result.game_score[i][0]}}</span>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+
+                <button @click="page='view_all'" class="btn-main">View All</button>
+
+                <div class="next-game-card">
+                    <p class="title">NEXT</p>
+                    <div class="divider"></div>
+                    <div class="content">
+                        <img src="imgs/next.svg" class="icon">
+                        <p class="game-name">TEAM DANCING</p>
+                    </div>
+                </div>
+            </div>
+
+            <div v-else-if="page=='typhoon'">
+                <button @click="page='home'" class="btn-back">ホームへ</button>
+                <div class="detail-page-header">
+                    <img src="imgs/teamdance.svg">
+                    <p class="score-font-red">EYE OF TYPHOON</p>
+                </div>
+                <div class="score-divider mt-2"></div>
+                <template v-for="j in 2">
+                <div class="race-card">
+                    <p class="race-title">第{{j}}レース</p>
+                    <template v-for="(i,index) in result['typhoon'][j-1]">
+                        <div class="rank-item" :class="{whiteRankBar:team[3].includes(i[2]),redRankBar:team[2].includes(i[2])}">
+                            <p>{{index+1}}<span class="team-name">{{i}}</span><span class="point">{{score_config.typhoon_score[index]}}p</span></p>
+                        </div>
+                    </template>
+                </div>
+                </template>
+            </div>
+
+            <div v-else-if="page=='all_relay'">
+                <button @click="page='home'" class="btn-back">ホームへ</button>
+                <div class="detail-page-header">
+                    <img src="imgs/teamdance.svg">
+                    <p class="score-font-red">ALL STAR RELAY</p>
+                </div>
+                <div class="score-divider mt-2"></div>
+                <template v-for="j in 3">
+                <div class="race-card">
+                    <p class="race-title">{{game_order['all_relay'][j-1]}}</p>
+                    <template v-for="(i,index) in result['all_relay'][j-1]">
+                        <div class="rank-item" :class="{whiteRankBar:team[3].includes(i[2]) || team[1].includes(i),redRankBar:team[2].includes(i[2]) || team[0].includes(i)}">
+                            <p>{{index+1}}<span class="team-name">{{i}}</span><span class="point">{{score_config.long_jump[index]}}p</span></p>
+                        </div>
+                    </template>
+                </div>
+                </template>
+            </div>
+            
+            <div v-else-if="page=='borrow_race'">
+                <button @click="page='home'" class="btn-back">ホームへ</button>
+                <div class="detail-page-header">
+                    <img src="imgs/teamdance.svg">
+                    <p class="score-font-red">BORROW TO BORROW RACE</p>
+                </div>
+                <div class="score-divider mt-2"></div>
+                <template v-for="j in 6">
+                <div class="race-card">
+                    <p class="race-title">第{{j}}レース</p>
+                    <div class="d-flex justify-content-around mb-2">
+                        <p class="fw-bold score-font-red" style="font-size:12px;">中学</p>
+                        <p class="fw-bold score-font-red" style="font-size:12px;">高1</p>
+                        <p class="fw-bold score-font-red" style="font-size:12px;">高2</p>
+                        <p class="fw-bold score-font-red" style="font-size:12px;">高3</p>
+                    </div>
+                    <template v-for="i in 4">
+                        <div class="d-flex align-items-center mb-2">
+                            <p class="me-3 fw-bold score-font-red" style="font-size:20px;">{{i}}</p>
+                            <div class="d-flex flex-grow-1 justify-content-around">
+                                <template v-for="k in result['borrow_race'][j-1][i-1]">
+                                    <template v-if="k!=null">
+                                        <div class="pt-2" :class="{whiteRankBar:team[3].includes(k[2]) || team[1].includes(k),redRankBar:team[2].includes(k[2]) || team[0].includes(k)}" style="height:35px;width:45px;font-size:12px;text-align: center; border-radius: 5px;">
+                                            {{k}}
+                                        </div>
+                                    </template>
+                                </template>
+                            </div>
+                            <p class="ms-auto fw-bold score-font-red" style="font-size:20px;">{{score_config.borrow_race[i-1]}}p</p>
+                        </div>
+                    </template>
+                </div>
+                </template>
+            </div>
+
+            <div v-else-if="page=='long_jump'">
+                <button @click="page='home'" class="btn-back">ホームへ</button>
+                <div class="detail-page-header">
+                    <img src="imgs/teamdance.svg">
+                    <p class="score-font-red">LONG ROPE JUMP</p>
+                </div>
+                <div class="score-divider mt-2"></div>
+                <template v-for="j in 3">
+                <div class="race-card">
+                    <p class="race-title">{{game_order['long_jump'][j-1]}}</p>
+                    <template v-for="(i,index) in result['long_jump'][j-1]">
+                        <div class="rank-item" :class="{whiteRankBar:team[3].includes(i[0][2]) || team[1].includes(i[0]),redRankBar:team[2].includes(i[0][2]) || team[0].includes(i[0])}" style="height:auto; padding:10px; flex-wrap:wrap;">
+                           <div class="d-flex w-100 justify-content-between">
+                                <div><strong>{{index+1}}. {{i[0]}}</strong></div>
+                                <div><strong>{{i[3]}}回</strong></div>
+                                <div style="font-size:12px;">大繩: {{i[1]}} / 8の字: {{i[2]}}</div>
+                                <div><strong>{{score_config.all_relay_score[index]}}p</strong></div>
+                           </div>
+                        </div>
+                    </template>
+                </div>
+                </template>
+            </div>
+            
+            <div v-else-if="page=='ball_toss'">
+                <button @click="page='home'" class="btn-back">ホームへ</button>
+                <div class="detail-page-header">
+                    <img src="imgs/teamdance.svg">
+                    <p class="score-font-red">OBSTACLE BALL TOSS</p>
+                </div>
+                <div class="score-divider mt-2"></div>
+                 <template v-for="j in 3">
+                <div class="race-card">
+                    <p class="race-title">{{game_order['ball_toss'][j-1]}}</p>
+                    <template v-for="(i,index) in result['ball_toss'][j-1]">
+                        <div class="rank-item" :class="{whiteRankBar:team[3].includes(i[0][2]) || team[1].includes(i[0]),redRankBar:team[2].includes(i[0][2]) || team[0].includes(i[0])}" style="height:auto; padding:10px; flex-wrap:wrap;">
+                            <div class="d-flex w-100 justify-content-between align-items-center">
+                                <div style="font-size:12px; text-align:center;">{{i[0]}}<br>&<br>{{i[1]}}</div>
+                                <div class="fw-bold" style="font-size:18px;">{{i[5]}}球</div>
+                                <div style="font-size:11px;">獲得: {{i[3]}}<br>お邪魔: {{i[4]}}</div>
+                            </div>
+                        </div>
+                    </template>
+                </div>
+                </template>
+            </div>
+            
+            <div v-else-if="page=='vertical_relay'">
+                <button @click="page='home'" class="btn-back">ホームへ</button>
+                <div class="detail-page-header">
+                    <img src="imgs/teamdance.svg">
+                    <p class="score-font-red">VERTICAL RELAY</p>
+                </div>
+                <div class="score-divider mt-2"></div>
+                <div class="race-card">
+                    <template v-for="(i,index) in result['vertical_relay']">
+                        <div class="rank-item" :class="{whiteRankBar:team[3].includes(i[0]) || team[1].includes(i[0]),redRankBar:team[2].includes(i[0]) || team[0].includes(i[0])}">
+                            <p>{{index+1}}<span class="team-name">{{i[0]}} & {{i[1]}} & {{i[2]}}</span><span>{{score_config.vertical_relay[index]}}p</span></p>
+                        </div>
+                    </template>
+                </div>
+            </div>
+            
+            <div v-else-if="page=='view_all'">
+                <button @click="page='home'" class="btn-back">ホームへ</button>
+                 <template v-for="(i,index) in game_list">
+                    <div v-if="result['game_score'][i][0]+result['game_score'][i][1]!=0" class="game-result-card mt-3">
+                        <p class="game-title">第{{index+1}}競技</p>
+                        <div class="game-scores">
+                            <span class="score-font-white">{{result.game_score[i][1]}}</span>
+                            <div @click="page=i">
+                                <img src="imgs/teamdance.svg" class="game-icon">
+                                <p class="game-name">{{game_list_jp[index]}}</p>
+                            </div>
+                            <span class="score-font-red">{{result.game_score[i][0]}}</span>
+                        </div>
+                    </div>
+                </template>
+                
+                <div class="mt-4">
+                    <div class="total-score-display">
+                        <span class="score-font-white">{{result.total[1]}}</span>
+                        <span class="score-font-red">{{result.total[0]}}</span>
+                    </div>
+                    <div class="score-bar-container">
+                        <div id="scoreBarWhite" :style="{width:result.total[1]/(result.total[0]+result.total[1])*100+'%'}"></div>
+                        <div id="scoreBarRed" :style="{width:result.total[0]/(result.total[0]+result.total[1])*100+'%'}"></div>
+                    </div>
+                </div>
+                 <button @click="page='home'" class="btn-back">ホームへ</button>
+            </div>
+            
+        </main>
+
+        <footer class="main-footer">
+            <div class="container">
+                <span>県千葉体育大会執行部</span>
+                <span></span>
+            </div>
+        </footer>
+
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384
