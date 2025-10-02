@@ -74,7 +74,7 @@
     </div>
     <div style="background-size:  cover;background-image: url('imgs/pre.png');text-align:center;border-bottom:solid 1px gray;padding:20px;box-shadow: 0px 5px 4px gray;width:100%;background-color: white;">
         <div style="text-align: center;" >
-            <img src="imgs/25秋_横-removebg-preview.png" width="60%" style="text-align: center;">
+            <img src="imgs/header_logo.png" width="60%" style="text-align: center;">
         </div>
     </div>
 
@@ -103,7 +103,7 @@
                     <div class="d-flex justify-content-between ps-5 pe-5 ">
                         <span style="font-size:25px;font-weight:bold;color:white;font-family:'Jost';-webkit-text-stroke: 2px rgb(196, 49, 49);margin-top:20px">{{result.game_score[i][1]}}</span>
                         <div style="text-align: center;">
-                        <img src="imgs/long_jump.png" style="width:80px;" @click="page=i">
+                        <img v-bind:src="'imgs/'+i+'.png'" style="width:95px;" @click="page=i">
                         <p style="font-size:15px;color:rgb(196, 49, 49)" class="fw-bold">{{game_list_jp.slice().reverse()[index]}}</p>
                         </div>
                         <span style="font-size:27px;font-weight:bold;color:rgb(196, 49, 49);font-family:'Jost';margin-top:20px">{{result.game_score[i][0]}}</span>
@@ -115,14 +115,24 @@
             <div class="text-center mt-3">
             <button @click="page='view_all'" class=" mx-auto" style="text-decoration:none;width:50%;border:2px solid rgb(196, 49, 49);border-radius:30px;font-family:'jost';font-size:18px;background-color:white;color:rgb(196, 49, 49)">View All</button>
             </div>
-            <div class="card mt-3 pt-2 ps-3 pe-3 pb-3" style="background-color:rgb(196, 49, 49);">
+            <template v-if="next_game!='last_logo'">
+            <div class="card mt-3 pt-2 ps-3 pe-3 pb-3" style="background-color:#d90505ff;">
                 <p style="font-size:20px;color:white;font-family:'jost';font-weight:bold">NEXT</p>
                 <div style="height:2px;background-color:white;width:100%;margin-top:-15px"></div>
                 <div class="d-flex" style="margin-top:10px">
-                <img src="imgs/next.svg" style="width:60px">
-                <p style="font-size:20px;color:white;font-family:'jost';font-weight:bold" class="ms-3 mt-3">TEAM DANCING</p>
+                <img v-bind:src="'imgs/'+next_game+'.png'" style="width:90px">
+                <p style="font-size:17px;color:white;font-family:'jost';font-weight:bold" class="ms-3 mt-3">{{next_game_jp}}</p>
                 </div>
             </div>
+            </template>
+            <template v-else>
+                <div class="card mt-3 pt-2 ps-3 pe-3 pb-3" style="background-color:white;border:1px solid #d90505ff">
+                    <div class="d-flex" style="margin-top:10px">
+                    <img v-bind:src="'imgs/'+next_game+'.png'" style="width:50px">
+                    <p style="font-size:17px;color:#d90505ff;font-family:'jost';font-weight:bold" class="ms-3 mt-3">{{next_game_jp}}</p>
+                    </div>
+                </div>
+            </template>
         </div>
 
         <div v-else-if="page=='select'" class="p-3">
@@ -273,7 +283,7 @@
                             <p class="ms-4" style="font-size:15px;margin-top:10px">{{i[5]}}球</p>
                             <div class="ms-4" style="margin-top:3px">
                                 <p style="font-size:11px">獲得球 : {{i[3]}}</p>
-                                <p style="font-size:11px;margin-top:-10px">お邪魔した球 : {{i[4]}}</p>
+                                <p style="font-size:11px;margin-top:-10px">お邪魔された球 : {{i[4]}}</p>
                             </div>
                             <!--<p style="margin-top:12px" class="ms-auto me-3">{{score_config.all_relay_score[index]}}p</p>-->
                             </div>
@@ -306,6 +316,27 @@
             </template>
         </div>
 
+        <div v-else-if="page=='dance'">
+            <button @click="page='home'" class="d-block mt-3" style="text-decoration:none;width:70px;background-color:rgb(196, 49, 49);border-radius:0px 80px 80px 0px;font-size:13px;color:white;border:none;height:25px;font-weight:bold">ホームへ</button>
+            <div class="d-flex mt-3">
+            <img src="imgs/teamdance.svg" style="width:90px">
+            <p class="scoreFontRed" style="font-size:20px;margin-top:30px;margin-left:20px">TEAM DANCE</p>
+            </div>
+            <div style="height:2px;background-color:rgb(196, 49, 49);width:100%" class="mt-2"></div>
+            <template v-for="j in 2">
+                <div class="card" style="padding:15px;margin-top:20px;border:1px solid rgb(196, 49, 49)">
+                    <p style="border-radius:80px;padding:5px;font-weight:bold;border:1px solid rgb(196, 49, 49);font-size:12px;width:90px;color:rgb(196, 49, 49);text-align: center;">
+                        {{game_order['dance'][j-1]}}</p>
+                    <template v-for="(i,index) in result['dance'][j-1]">
+                        <div class="card mb-2 ps-3" v-bind:class="{card:true,'mb-2':true,whiteRankBar:team[3].includes(i[2]) || team[1].includes(i),redRankBar:team[2].includes(i[2]) || team[0].includes(i)}" 
+                        style="height:35px;padding-top:6px">
+                            <p>{{index+1}}<span class="ms-5">{{i}}</span><span style="float: right" class="me-3">{{score_config.long_jump[index]}}p</span></p>
+                        </div>
+                    </template>
+                </div>
+            </template>
+        </div>
+
         <div v-else-if="page=='view_all'">
             <button @click="page='home'" class="d-block mt-3" style="text-decoration:none;width:70px;background-color:rgb(196, 49, 49);border-radius:0px 80px 80px 0px;font-size:13px;color:white;border:none;height:25px;font-weight:bold">ホームへ</button>
             <template v-for="(i,index) in game_list">
@@ -314,7 +345,7 @@
                 <div class="d-flex justify-content-between ps-5 pe-5 ">
                     <span style="font-size:25px;font-weight:bold;color:white;font-family:'Jost';-webkit-text-stroke: 2px rgb(196, 49, 49);margin-top:20px">{{result.game_score[i][1]}}</span>
                     <div style="text-align: center;">
-                    <img src="imgs/teamdance.svg" style="width:90px;" @click="page=i">
+                    <img v-bind:src="'imgs/'+i+'.png'" style="width:90px;" @click="page=i">
                     <p style="font-size:16px;color:rgb(196, 49, 49)" class="fw-bold">{{game_list_jp[index]}}</p>
                     </div>
                     <span style="font-size:27px;font-weight:bold;color:rgb(196, 49, 49);font-family:'Jost';margin-top:20px">{{result.game_score[i][0]}}</span>
@@ -341,7 +372,7 @@
             <div class="d-flex justify-content-between mt-4 ps-5 pe-5">
                 <span style="font-size:25px;margin-top:20px" class="scoreFontWhite">{{result.game_score[page][1]}}</span>
                 <div style="text-align: center;">
-                    <img src="imgs/longjump.svg" style="width:100px;">
+                    <img v-bind:src="'imgs/'+page+'.png'" style="width:100px;">
                 </div>
                 <span style="font-size:27px;margin-top:20px" class="scoreFontRed">{{result.game_score[page][0]}}</span>
             </div>
@@ -379,8 +410,8 @@
         data: {
             page:"home",
             result:{'typhoon':[["3-B","3-A","3-E","3-C"],["3-D","3-F","3-H","3-G"]],
-            'game_score':{'typhoon':[140,145],'all_relay':[80,95],'borrow_race':[50,60],'long_jump':[90,80],
-                'ball_toss':[50,70],'vertical_relay':[40,50]
+            'game_score':{'typhoon':[140,145],'all_relay':[80,95],'borrow_race':[50,60],'long_jump':[10,90],
+                'ball_toss':[50,70],'vertical_relay':[0,0],'dance':[20,30]
             },
             'all_relay': [["1-2","2-2","2-1","3-2","3-1","1-1"],
             ["1-D","1-C","1-E","1-H","1-A","1-B","1-F","1-G"],
@@ -420,7 +451,9 @@
             [ '3-B', '3-2', '3-A', 40, 20, 60 ],[ '3-G', '3-2', '3-D', 40, 20, 60 ],
             [ '3-C', '3-1', '3-E', 30, 10, 45 ],[ '3-F', '3-1', '3-H', 30, 10, 45 ] ] ],
             'vertical_relay':[ [ 'B', 'E', 2, 1 ],[ 'A', 'F', 1, 2 ],[ 'C', 'D', 1, 3 ],[ 'G', 'H', 2, 4 ] ],
-            'total':[120,210]
+            'total':[120,210],
+            'dance':[["3-2","3-1"],
+                ["1-E",  "1-F",  "1-B",  "1-D",  "1-C",  "1-H",  "1-A",  "1-G"]]
             },
             team_num:[[0,2,3,5],[1,4,6,7]],
             team:[['1-1','2-1','3-1'],['1-2','2-2','3-2'],['A','C','D','F'],['B','E','G','H']],
@@ -429,27 +462,45 @@
                 all_relay_score:[25,20,16,12,8,6,4,2],
                 borrow_race:[4,3,2,1],
                 long_jump:[25,20,16,12,8,6,4,2],
-                vertical_relay:[10,7,5,3]
+                vertical_relay:[10,7,5,3],
+                dance:[25,20,16,12,8,6,4,2]
             },
-            game_list:['typhoon','all_relay','borrow_race','ball_toss','long_jump','vertical_relay'],
-            game_list_jp:['台風の目','全員リレー','借人競走','おじゃま玉入れ','大縄跳び','縦割りリレー'],
+            game_list:['typhoon','all_relay','borrow_race','ball_toss','dance','long_jump','vertical_relay'],
+            game_list_jp:['台風の目','全員リレー','借人競走','おじゃま玉入れ','チームダンス','大縄跳び','縦割りリレー'],
             game_order:{'long_jump':['中学生','高校2年','高校3年'],
             'ball_toss':['中学1年+高校1年','中学2年+高校2年','中学3年+高校3年'],
-            'all_relay':['中学1年','高校1年','高校2年']}
+            'all_relay':['中学1年','高校1年','高校2年'],
+            'dance':['中学生','高校生']},
+            next_game:"",
+            next_game_jp:''
         },
-        /***mounted:function(){
-            fetch("https://script.google.com/macros/s/AKfycbzT8SFiv-KjLJU8Sr8gaARyJZ5p0egrpkql4QA5bQqsX04JxvJLyZ7vl4KmSSM-s3F-/exec")
+        created:function(){
+            let finish_flag=0
+            for(let i=0; i<this.game_list.length; i++){
+                console.log(this.result.game_score[this.game_list[i]],'hhhh')
+                console.log('fdaf')
+                if(this.result.game_score[this.game_list[i]][0]+this.result.game_score[this.game_list[i]][1]==0){
+                    this.next_game=this.game_list[i];
+                    this.next_game_jp=this.game_list_jp[i];
+                    finish_flag=1;
+                    break
+                }
+            }
+            if(finish_flag==0){
+                this.next_game_jp="全ての競技が終了しました"
+                this.next_game='last_logo'
+            }
+            /*fetch("https://script.google.com/macros/s/AKfycbzT8SFiv-KjLJU8Sr8gaARyJZ5p0egrpkql4QA5bQqsX04JxvJLyZ7vl4KmSSM-s3F-/exec")
                 .then(response => response.json())
                 .then(data => {
                 console.log(data); // 受け取ったJSON
                 this.result=JSON.parse(data)
                 })
-                .catch(error => console.error("Error:", error));
-        }***/
+                .catch(error => console.error("Error:", error));*/
+        }
 
     })
     </script>
 
 </body>
 </html>
-
