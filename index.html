@@ -152,7 +152,7 @@
         <div v-else-if="page=='typhoon'">
             <button @click="page='home'" class="d-block mt-3" style="text-decoration:none;width:70px;background-color:rgb(196, 49, 49);border-radius:0px 80px 80px 0px;font-size:13px;color:white;border:none;height:25px;font-weight:bold">ホームへ</button>
             <div class="d-flex mt-3">
-            <img src="imgs/teamdance.svg" style="width:90px">
+            <img v-bind:src="'imgs/'+page+'.png'" style="width:100px">
             <p class="scoreFontRed" style="font-size:20px;margin-top:30px;margin-left:20px">EYE OF TYPHOON</p>
             </div>
             <div style="height:2px;background-color:rgb(196, 49, 49);width:100%" class="mt-2"></div>
@@ -172,7 +172,7 @@
         <div v-else-if="page=='all_relay'">
             <button @click="page='home'" class="d-block mt-3" style="text-decoration:none;width:70px;background-color:rgb(196, 49, 49);border-radius:0px 80px 80px 0px;font-size:13px;color:white;border:none;height:25px;font-weight:bold">ホームへ</button>
             <div class="d-flex mt-3">
-            <img src="imgs/teamdance.svg" style="width:90px">
+            <img v-bind:src="'imgs/'+page+'.png'" style="width:100px">
             <p class="scoreFontRed" style="font-size:20px;margin-top:30px;margin-left:20px">ALL STAR RELAY</p>
             </div>
             <div style="height:2px;background-color:rgb(196, 49, 49);width:100%" class="mt-2"></div>
@@ -193,7 +193,7 @@
         <div v-else-if="page=='borrow_race'">
             <button @click="page='home'" class="d-block mt-3" style="text-decoration:none;width:70px;background-color:rgb(196, 49, 49);border-radius:0px 80px 80px 0px;font-size:13px;color:white;border:none;height:25px;font-weight:bold">ホームへ</button>
             <div class="d-flex mt-3">
-            <img src="imgs/teamdance.svg" style="width:90px">
+            <img v-bind:src="'imgs/'+page+'.png'" style="width:100px">
             <p class="scoreFontRed" style="font-size:20px;margin-top:30px;margin-left:20px">BORROW TO BORROW RACE</p>
             </div>
             <div style="height:2px;background-color:rgb(196, 49, 49);width:100%" class="mt-2"></div>
@@ -230,7 +230,7 @@
         <div v-else-if="page=='long_jump'">
             <button @click="page='home'" class="d-block mt-3" style="text-decoration:none;width:70px;background-color:rgb(196, 49, 49);border-radius:0px 80px 80px 0px;font-size:13px;color:white;border:none;height:25px;font-weight:bold">ホームへ</button>
             <div class="d-flex mt-3">
-            <img src="imgs/teamdance.svg" style="width:90px">
+            <img v-bind:src="'imgs/'+page+'.png'" style="width:100px">
             <p class="scoreFontRed" style="font-size:20px;margin-top:30px;margin-left:20px">LONG ROPE JUMP</p>
             </div>
             <div style="height:2px;background-color:rgb(196, 49, 49);width:100%" class="mt-2"></div>
@@ -262,7 +262,7 @@
         <div v-else-if="page=='ball_toss'">
             <button @click="page='home'" class="d-block mt-3" style="text-decoration:none;width:70px;background-color:rgb(196, 49, 49);border-radius:0px 80px 80px 0px;font-size:13px;color:white;border:none;height:25px;font-weight:bold">ホームへ</button>
             <div class="d-flex mt-3">
-            <img src="imgs/teamdance.svg" style="width:90px">
+            <img v-bind:src="'imgs/'+page+'.png'" style="width:100px">
             <p class="scoreFontRed" style="font-size:20px;margin-top:30px;margin-left:20px">OBSTACLE BALL TOSS</p>
             </div>
             <div style="height:2px;background-color:rgb(196, 49, 49);width:100%" class="mt-2"></div>
@@ -296,7 +296,7 @@
         <div v-else-if="page=='vertical_relay'">
             <button @click="page='home'" class="d-block mt-3" style="text-decoration:none;width:70px;background-color:rgb(196, 49, 49);border-radius:0px 80px 80px 0px;font-size:13px;color:white;border:none;height:25px;font-weight:bold">ホームへ</button>
             <div class="d-flex mt-3">
-            <img src="imgs/teamdance.svg" style="width:90px">
+            <img v-bind:src="'imgs/'+page+'.png'" style="width:100px">
             <p class="scoreFontRed" style="font-size:20px;margin-top:30px;margin-left:20px">VERTICAL RELAY</p>
             </div>
             <div style="height:2px;background-color:rgb(196, 49, 49);width:100%" class="mt-2"></div>
@@ -319,7 +319,7 @@
         <div v-else-if="page=='dance'">
             <button @click="page='home'" class="d-block mt-3" style="text-decoration:none;width:70px;background-color:rgb(196, 49, 49);border-radius:0px 80px 80px 0px;font-size:13px;color:white;border:none;height:25px;font-weight:bold">ホームへ</button>
             <div class="d-flex mt-3">
-            <img src="imgs/teamdance.svg" style="width:90px">
+            <img v-bind:src="'imgs/'+page+'.png'" style="width:100px">
             <p class="scoreFontRed" style="font-size:20px;margin-top:30px;margin-left:20px">TEAM DANCE</p>
             </div>
             <div style="height:2px;background-color:rgb(196, 49, 49);width:100%" class="mt-2"></div>
@@ -466,7 +466,7 @@
                 dance:[25,20,16,12,8,6,4,2]
             },
             game_list:['typhoon','all_relay','borrow_race','ball_toss','dance','long_jump','vertical_relay'],
-            game_list_jp:['台風の目','全員リレー','借人競走','おじゃま玉入れ','チームダンス','大縄跳び','縦割りリレー'],
+            game_list_jp:['台風の目','全員リレー','借人競走','おじゃま玉入れ','チームダンス','長縄跳び','縦割りリレー'],
             game_order:{'long_jump':['中学生','高校2年','高校3年'],
             'ball_toss':['中学1年+高校1年','中学2年+高校2年','中学3年+高校3年'],
             'all_relay':['中学1年','高校1年','高校2年'],
